@@ -100,7 +100,7 @@ class LinkedList:
     def __iter__(self):
         cur = self.head
         while cur:
-            yield cur
+            yield cur.value
             cur = cur.nxt
 
     def __str__(self):
@@ -132,11 +132,9 @@ class CircularLinkedList(LinkedList):
         super().remove(index)
         self._make_circle()
 
-    def __str__(self):
+    def __iter__(self):
         cur = self.head
-        s = "{}".format(cur)
-        for _ in range(1, self.size):
+        for _ in range(self.size):
+            yield cur.value
             cur = cur.nxt
-            s += " -> {}".format(cur)
-        return s
 

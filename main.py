@@ -1,10 +1,11 @@
-from gui import JosephusWindow
+from models import Josephus, JosephusVisualizer
 
 
 def main():
     n = int(input("Enter the number of people: "))
-    window = JosephusWindow(n)
-    with window:
+    josephus = Josephus(n)
+    visualizer = JosephusVisualizer(josephus)
+    with visualizer:
         pass
 
 
