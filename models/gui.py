@@ -4,6 +4,34 @@ import numpy as np
 from utils import get_image, get_image_data, rotate_image, image_tint
 from .josephus import Josephus
 
+sg.theme('DarkAmber')
+
+class NumberInputVisualizer:
+    def __init__(self, text, button_text):
+        self.layout = [
+            [sg.Text(text)],
+            [sg.Input(key='input')],
+            [sg.Button(button_text, key='button')]
+        ]
+        self.window = sg.Window('Number Input', self.layout)
+
+    def __enter__(self):
+        return self.run()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.window.close()
+
+    def run(self):
+        while True:
+            event, values = self.window.read()
+            if event == 'button':
+                try:
+                    return int(values['input'])
+                except ValueError:
+                    sg.PopupOK('Please enter a valid number')
+            if event == sg.WIN_CLOSED:
+                return None
+
 
 class JosephusVisualizer:
     RADIUS = 300
@@ -14,7 +42,6 @@ class JosephusVisualizer:
 
     def __init__(self, josephus: Josephus):
 
-        sg.theme('DarkAmber')
         self.graph = sg.Graph(self.SIZE, (0, 0), self.SIZE, expand_x=True, expand_y=True)
         layout = [[self.graph]]
         self.window = sg.Window('Josephus Problem', layout, resizable=False, finalize=True)
@@ -56,6 +83,11 @@ class JosephusVisualizer:
                              font='Helvetica 30', color='white')
 
     def draw(self):
+        self.graph.draw_text("n = {}".format(self.josephus.count), (5, self.SIZE[1] - 5),
+                             text_location=sg.TEXT_LOCATION_TOP_LEFT, font='Helvetica 20', color='white')
+        self.graph.draw_text("k = {}".format(self.josephus.step), (5, self.SIZE[1] - 30),
+                             text_location=sg.TEXT_LOCATION_TOP_LEFT, font='Helvetica 20', color='white')
+
         aliveness = self.josephus.aliveness()
 
         for i, pos in enumerate(self.get_positions()):

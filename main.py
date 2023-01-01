@@ -1,10 +1,12 @@
-from models import Josephus, JosephusVisualizer
+from models import Josephus, JosephusVisualizer, NumberInputVisualizer
 
 
 def main():
-    n = int(input("Enter number of people: "))
-    k = int(input("Enter step: "))
-    josephus = Josephus(n, k)
+    with NumberInputVisualizer('Enter Number of soldiers', 'Nex') as count:
+        pass
+    with NumberInputVisualizer('Enter Step', 'Next') as step:
+        pass
+    josephus = Josephus(count, step)
     visualizer = JosephusVisualizer(josephus)
     with visualizer:
         pass
