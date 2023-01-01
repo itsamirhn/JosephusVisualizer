@@ -2,15 +2,16 @@ from .linkedlist import CircularLinkedList
 
 
 class Josephus:
-    def __init__(self, count):
+    def __init__(self, count, step):
         self.count = count
+        self.step = step
         self.victim = 0
         self.soldiers = CircularLinkedList.range(0, count)
 
     def kill(self):
         if self.soldiers.size == 1:
             return None
-        self.victim = (self.victim + 1) % self.soldiers.size
+        self.victim = (self.victim + self.step - 1) % self.soldiers.size
         soldier = self.soldiers[self.victim]
         self.soldiers.remove(self.victim)
         return soldier
