@@ -138,3 +138,6 @@ class CircularLinkedList(LinkedList):
             yield cur.value
             cur = cur.nxt
 
+    def __copy__(self):
+        return self.from_iterable(self)
+
